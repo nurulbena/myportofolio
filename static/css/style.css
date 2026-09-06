@@ -7,8 +7,8 @@
 :root {
     --ink: #1c1917;
     --paper: #faf6f0;
-    --accent: #d95d39;
-    --accent-dark: #a8442a;
+    --accent: #91aec4;
+    --accent-dark: #1d3f4f;
     --line: #e3d9c9;
     --text-muted: #6b6459;
     --radius: 4px;
@@ -164,9 +164,85 @@ h1, .brand {
     display: block;
     width: 100%;
     aspect-ratio: 1 / 1;
+    object-position: center 30%;
     object-fit: cover;
     border-radius: var(--radius);
-    border: 3px solid var(--ink);
+    border: 1px solid var(--ink);
+}
+
+.skills-section,
+.experience-section,
+.education-section {
+    padding: 3rem 0;
+    border-top: 1px solid var(--line);
+}
+
+.skills-section h2,
+.experience-section h2,
+.education-section h2 {
+    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.skill-card {
+    padding: 1.25rem;
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+}
+
+.skill-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.skill-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.timeline {
+    list-style: none;
+    border-left: 2px solid var(--line);
+}
+
+.timeline-item {
+    position: relative;
+    padding: 0.5rem 0 1.25rem 1.5rem;
+}
+
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: 0.6rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--accent);
+}
+
+.timeline-item h3 {
+    font-size: 1rem;
+    margin-bottom: 0.15rem;
+}
+
+.timeline-item p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
 }
 
 .site-footer {
@@ -191,5 +267,9 @@ h1, .brand {
 
     .social-links {
         justify-content: flex-start;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
     }
 }
