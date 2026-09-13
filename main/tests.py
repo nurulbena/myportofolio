@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from main.models import Experience
-
+from main.models import Skill
 
 class MainTest(TestCase):
     def setUp(self):
@@ -56,3 +56,35 @@ class MainTest(TestCase):
         self.assertFalse(self.experience.is_ongoing)
         self.assertContains(response, "Selesai")
         self.assertNotContains(response, "Sedang berlangsung")
+
+class SkillPageTest(TestCase):
+    def setUp(self):
+        self.skill = Skill.objects.create(
+            name="Video Editing",
+            description="Mampu melakukan penyuntingan video dasar untuk kebutuhan pribadi.",
+            category="technical",
+        )
+
+    def test_skills_url_is_accessible(self):
+        response = self.client.get(reverse("main:show_skills"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "skills.html")
+        self.assertContains(response, f'href="{reverse("main:show_main")}"')
+
+    def test_skill_model(self):
+        self.assertEqual(str(self.skill), "Video Editing")
+        self.assertEqual(self.skill.category, "technical")
+
+    def test_skill_page_shows_data(self):
+        response = self.client.get(reverse("main:show_skills"))
+
+        self.assertContains(response, self.skill.name)
+        self.assertContains(response, self.skill.description)
+        self.assertContains(response, "Technical Skill")
+
+    def test_empty_skill_page(self):
+        Skill.objects.all().delete()
+        response = self.client.get(reverse("main:show_skills"))
+
+        self.assertContains(response, "Belum ada skill yang ditambahkan.")
