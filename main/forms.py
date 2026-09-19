@@ -1,6 +1,6 @@
-from django.forms import ModelForm, TextInput, Textarea, Select
+from django.forms import ModelForm, TextInput, Textarea, Select, URLInput
 
-from main.models import Skill
+from main.models import Skill, Experience
 
 class SkillForm(ModelForm):
     class Meta:
@@ -31,4 +31,42 @@ class SkillForm(ModelForm):
                 }
             ),
             "category": Select(),
+        }
+
+class ExperienceForm(ModelForm):
+    class Meta:
+        model = Experience
+        fields = [
+            "title",
+            "description",
+            "category",
+            "thumbnail",
+        ]
+
+        labels = {
+            "title": "Judul",
+            "description": "Deskripsi",
+            "category": "Kategori",
+            "thumbnail": "Link Gambar (opsional)",
+        }
+
+        widgets = {
+            "title": TextInput(
+                attrs={
+                    "placeholder": "Staff of Software Engineering Academy",
+                    "maxlength": 255,
+                }
+            ),
+            "description": Textarea(
+                attrs={
+                    "placeholder": "Ceritakan pengalaman kamu",
+                    "rows": 3,
+                }
+            ),
+            "category": Select(),
+            "thumbnail": URLInput(
+                attrs={
+                    "placeholder": "https://...",
+                }
+            ),
         }
