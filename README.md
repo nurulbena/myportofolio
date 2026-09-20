@@ -25,6 +25,11 @@ cara menjalankan
 3. Makemigrations berfungsi untuk membaca perubahan yang dibuat pada models.py dan membuat berkas migrasi (semacam catatan perubahan) tanpa langsung mengubah database. Berkas ini belum diterapkan ke db.sqlite3. Sedangkan Migrate yang mengeksekusi instruksi dari berkas migrasi tersebut ke database, sehingga perubahan strukturnya (misalnya tabel baru, menambah kolom atau menghapus field) benar-benar terbentuk.
 Contohnya saat saya menambahkan model skill pada model.py. Setelah menjalankan python manage.py makemigrations, Django membuat file main/migrations/0002_skill.py yang berisi instruksi  "Create model Skill", namun tabel Skill belum ada di database. Setelah menjalankan python manage.py migrate dan muncul output Applying main.0002_skill...OK, tabel Skill terbentuk di db.sqlite3 dan siap diisi data. Jika hanya menjalankan makemigrations tanpa migrate, halaman /skills/ gagal diakses dan akan menampilkan error karena tabelnya belum ada di database.
 
+### TUGAS 3
+1. ModelFrom otomatis generate field HTML sesuai tipe data dari model dan juga otomatis validasi dari constraint yang didefinisikan di model sedangkan {% csrf_token %} wajib digunakan untuk mencegah serangan situs yang mencoba untuk nge-trigger submit form ke situs menggunakan sesi login korban tanpa mereka sadari, misalnya buat menghapus atau mengubah data mereka tanpa izin. Dengan csrf_token ini, Server bisa memastikan request tersebut beneran dikirim dari form situs sendiri, bukan dari situs luar
+2. JSON lebih ringkas dan ukurannya lebih kecil. Strukturnya lebih mudah untuk di mapping langsung ke object di hampir semua bahasa pemrograman. Selain itu, JSON juga native ke JavaScript, browser bisa langsung parse JSON pake JSON.parse() tanpa butuh parser tambahan, beda sama XML yang perlu di-parse pake library terpisah. Makanya JSON lebih cocok untuk web modern yang banyak pake JS/AJAX
+3. Alurnya: request masuk dan view akan ambil data dari database, lalu di serialize menjadi string JSON dan di bungkus HttpResponse dengan content_type="application/json" lalu dikirim kembali ke client. Serialization diperlukan untuk mengubah objek kompleks (model django) jadi format teks standar (JSON) yang bisa dibaca bahasa apa aja
+
 Dokumentasi & AI Disclosure
 saya menggunakan Claude untuk memandu saya dengan strategi bertanya step by step
 ### tugas 1 ###
@@ -53,3 +58,13 @@ bagian yang saya kerjakan sendiri:
 - menentukan isi tiap skill berdasarkan pengalaman pribadi
 - menjalankan semua command dan verifikasi hasil di browser
 - menulis jawaban akhir pertanyaan reflektif dengan kata-kata sendiri
+
+### tugas 3 ###
+bagian yang dibantu AI:
+- menyesuaikan pola dan generate kode, nama field dan widget dari contoh tutorial dari project ke skill dan experience 
+- review jawaban dari pertanyaan reflektif dan memberikan pemahaman serta mengoreksi kesalahan
+
+bagian yang saya kerjakan sendiri:
+- menulis jawaban pertanyaan reflektif dengan pemahaman dan bahasa sendiri
+- testing manual di browser untuk setiap fitur yang di tambahkan
+- menentukan section mana yang akan dipakai untuk tugas 3
