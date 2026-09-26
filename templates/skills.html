@@ -10,11 +10,13 @@
             <p class="section-kicker">Kemampuan yang saya kuasai</p>
             <div class="project-header">
                 <h1>Skills</h1>
+                {% if user.is_superuser %}
                 <a href="{% url 'main:create_skill' %}"
                    class="button project-add-button">
                     <span aria-hidden="true">+</span>
                     Tambah Skill
                 </a>
+            {% endif %} 
             </div>
             <form method="get"
                   action="{% url 'main:show_skills' %}"
@@ -38,7 +40,10 @@
                         <p class="experience-description">
                             {{ skill.description }}
                         </p>
-                        {% include "components/skill_delete_modal.html" with skill=skill %}
+                        {% include "components/skill_star.html" with skill=skill %}
+                        {% if user.is_superuser %}
+                            {% include "components/skill_delete_modal.html" with skill=skill %}
+                        {% endif %} 
                     </article>
                 {% empty %}
                     {% if name_query %}

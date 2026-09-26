@@ -1,4 +1,6 @@
 import uuid
+
+from django.contrib.auth.models import User
 from django.db import models
 
 class Experience(models.Model):
@@ -35,6 +37,9 @@ class Skill(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     category = models.CharField(max_length=20, choices=SKILL_CHOICES, default='technical')
-
+    starred_by = models.ManyToManyField(
+        User, related_name="starred_skills", blank=True
+    )
+    
     def __str__(self):
         return self.name
