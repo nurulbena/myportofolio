@@ -47,6 +47,8 @@
                             <p class="experience-status">Selesai</p>
                         {% endif %}
 
+                        {% include "components/experience_star.html" with experience=experience %}
+                        
                         <div class="experience-actions">
                             {% if user.is_superuser or is_editor %}
                             <a href="{% url 'main:update_experience' experience.id %}"
