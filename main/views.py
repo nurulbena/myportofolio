@@ -116,7 +116,11 @@ def get_experience_json(request):
     experience_json = serializers.serialize("json", experiences)
     return HttpResponse(experience_json, content_type="application/json")
 
+@login_required(login_url="/login/")
 def create_experience(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+        
     form = ExperienceForm(request.POST or None)
 
     if request.method == "POST" and form.is_valid():
@@ -206,3 +210,6 @@ def toggle_star(request, skill_id):
             skill.starred_by.add(request.user)
 
     return redirect("main:show_skills")
+
+def is_editor(user):
+    return user.groups.filter(name="Editor").exists()
