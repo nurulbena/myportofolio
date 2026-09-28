@@ -42,6 +42,7 @@ def show_experience(request):
         "name": "Nurul Fikryati Bena",
         "experience_list": experiences,
         "title_query": title_query,
+        "is_editor": is_editor(request.user) if request.user.is_authenticated else False,
     }
     return render(request, "experience.html", context)
 
