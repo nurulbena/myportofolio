@@ -29,6 +29,9 @@ def show_main(request):
     }
     return render(request, "index.html", context)
 
+def is_editor(user):
+    return user.groups.filter(name="Editor").exists()
+
 def show_experience(request):
     title_query = request.GET.get("title", "").strip()
 
@@ -241,3 +244,14 @@ def toggle_star(request, skill_id):
             skill.starred_by.add(request.user)
 
     return redirect("main:show_skills")
+
+def toggle_experience_star(request, experience_id):
+    experience = get_object_or_404(Experience, pk=experience_id)
+
+    if request.method == "POST":
+        if request.user in experience.starred_by.all():
+            experience.starred_by.remove(request.user)
+        else:
+            experience.starred_by.add(request.user)
+
+    return redirect("main:show_experience")
